@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>キャリアバランス診断テスト（簡易版） | Happy Life Rainbow™</title>
+  <title>50歳からのキャリア虹診断 | Happy Life Rainbow™</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -15,467 +15,240 @@
       --hobby: #7ED6DF;
       --living: #5DADE2;
       --relation: #C8A2C8;
-      --text: #46515f;
-      --muted: #748093;
-      --white: rgba(255, 255, 255, 0.88);
-      --shadow: 0 18px 48px rgba(114, 134, 170, 0.18);
-      --radius: 28px;
+      --red: #ff8fa3;
+      --orange: #ffb86b;
+      --yellow: #f6d365;
+      --green: #8bdc9b;
+      --blue: #79d6df;
+      --indigo: #8fb3ff;
+      --violet: #c6a4f4;
+      --ink: #344054;
+      --muted: #667085;
+      --soft: rgba(255,255,255,.84);
+      --line: rgba(255,255,255,.86);
+      --shadow: 0 24px 70px rgba(100,116,139,.16);
+      --radius: 30px;
     }
 
     * { box-sizing: border-box; }
-
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255, 154, 162, 0.34), transparent 28%),
-        radial-gradient(circle at 90% 18%, rgba(126, 214, 223, 0.34), transparent 30%),
-        radial-gradient(circle at 22% 86%, rgba(107, 203, 119, 0.26), transparent 32%),
-        linear-gradient(135deg, #fff7fb 0%, #f6fbff 48%, #fffdf4 100%);
-      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", system-ui, sans-serif;
       line-height: 1.8;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255,154,162,.30), transparent 30%),
+        radial-gradient(circle at 92% 14%, rgba(126,214,223,.32), transparent 32%),
+        radial-gradient(circle at 35% 95%, rgba(107,203,119,.22), transparent 34%),
+        linear-gradient(135deg, #fff7fb 0%, #f7fbff 48%, #fffdf2 100%);
+      min-height: 100vh;
     }
 
-    .app {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 28px 18px 54px;
-    }
-
-    .hero,
-    .card,
-    .result-panel {
-      background: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.78);
+    .app { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 24px 0 56px; }
+    .glass {
+      background: var(--soft);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
-
+    .rainbow-text {
+      color: transparent;
+      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .rainbow-line {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
+    }
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 42px 32px;
+      padding: clamp(28px, 5vw, 56px);
       text-align: center;
     }
-
-    .hero::before {
+    .hero:before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg,
-        rgba(255,154,162,.26), rgba(255,179,71,.24), rgba(255,217,61,.24),
-        rgba(107,203,119,.22), rgba(78,205,196,.22), rgba(126,214,223,.22),
-        rgba(93,173,226,.22), rgba(200,162,200,.26));
-      opacity: 0.85;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,.62), rgba(255,255,255,.18)),
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.90), transparent 48%);
       z-index: -1;
     }
-
-    .brand-logo {
-      width: min(168px, 48vw);
-      display: block;
-      margin: 0 auto 16px;
-      filter: drop-shadow(0 12px 24px rgba(90, 100, 130, .12));
-    }
-
+    .brand-logo { width: min(160px, 46vw); display: block; margin: 0 auto 16px; filter: drop-shadow(0 12px 28px rgba(90,100,130,.10)); }
     .badge {
       display: inline-flex;
-      gap: 8px;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       padding: 8px 16px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.76);
-      color: #69768a;
-      font-weight: 700;
-      font-size: 0.92rem;
-      margin-bottom: 18px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(255,255,255,.86);
+      color: #667085;
+      font-size: .9rem;
+      font-weight: 900;
+      letter-spacing: .08em;
     }
-
     h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 3.45rem);
-      letter-spacing: 0.03em;
-      line-height: 1.25;
-      color: #3f4958;
+      margin: 18px 0 0;
+      font-size: clamp(2.1rem, 7vw, 4.6rem);
+      line-height: 1.16;
+      letter-spacing: .035em;
     }
-
     .subtitle {
-      margin: 16px auto 0;
-      max-width: 720px;
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    .lead {
-      margin: 24px auto 0;
       max-width: 820px;
-      padding: 18px 20px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.64);
-      color: #59667a;
+      margin: 18px auto 0;
+      font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+      color: #566176;
+      font-weight: 700;
     }
-
-    .category-cover {
-      margin: 26px auto 0;
+    .empathy {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
       max-width: 900px;
+      margin: 28px auto 0;
+      text-align: left;
     }
-
-    .cover-category {
-      padding: 14px 10px;
-      border-radius: 22px;
+    .empathy div {
+      padding: 14px 16px;
+      border-radius: 20px;
       background: rgba(255,255,255,.68);
-      border: 1px solid rgba(255,255,255,.78);
-      box-shadow: 0 10px 24px rgba(120, 140, 180, .08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      min-height: 126px;
-    }
-
-    .cover-category svg,
-    .category-chip svg,
-    .report-title svg,
-    .top-title svg {
-      width: 46px;
-      height: 46px;
-      overflow: visible;
-      color: var(--cat-color);
-      flex: 0 0 auto;
-    }
-
-    .cover-category .jp {
-      font-weight: 900;
-      color: #46515f;
-      line-height: 1.35;
-      text-align: center;
-    }
-
-    .cover-category .en {
-      font-size: .72rem;
-      letter-spacing: .12em;
-      color: var(--cat-color);
-      font-weight: 900;
-    }
-
-    .progress-wrap {
-      margin: 26px 0 22px;
-      display: none;
-    }
-
-    .progress-text {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 0.92rem;
+      border: 1px solid rgba(255,255,255,.82);
+      color: #596579;
       font-weight: 700;
     }
-
-    .progress-bar {
-      height: 12px;
-      background: rgba(255,255,255,.7);
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.8);
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
-      transition: width .35s ease;
-    }
-
-    .start-area {
-      text-align: center;
-      margin-top: 28px;
-    }
-
-    button {
+    .cta-row { margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    button, .link-btn {
       appearance: none;
       border: 0;
       border-radius: 999px;
       cursor: pointer;
-      font-weight: 800;
-      letter-spacing: .04em;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-decoration: none;
       transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-      color: #4b5768;
-    }
-
-    button:hover { transform: translateY(-2px); }
-    button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-
-    .primary-btn {
-      padding: 15px 28px;
-      font-size: 1rem;
-      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
-      box-shadow: 0 14px 30px rgba(160, 175, 215, .26);
-    }
-
-    .ghost-btn {
-      padding: 13px 22px;
-      background: rgba(255,255,255,.74);
-      border: 1px solid rgba(150, 165, 196, .2);
-    }
-
-    .question-card {
-      margin-top: 22px;
-      padding: 30px;
-      display: none;
-    }
-
-    .category-chip {
+      color: #344054;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.66);
-      color: #5b6a82;
-      font-size: .92rem;
-      font-weight: 900;
-      margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,.82);
+      justify-content: center;
     }
-
-    .category-chip svg { width: 30px; height: 30px; }
-
-    .question-title {
-      font-size: clamp(1.35rem, 3vw, 1.9rem);
-      line-height: 1.55;
-      margin: 0 0 22px;
+    button:hover, .link-btn:hover { transform: translateY(-2px); }
+    button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .primary-btn {
+      padding: 16px 28px;
+      font-size: 1rem;
+      color: #fff;
+      text-shadow: 0 1px 10px rgba(0,0,0,.12);
+      background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green), var(--blue), var(--indigo), var(--violet));
+      box-shadow: 0 16px 34px rgba(148,163,184,.28);
     }
+    .ghost-btn { padding: 13px 22px; background: rgba(255,255,255,.78); border: 1px solid rgba(148,163,184,.20); }
+    .note { margin-top: 16px; color: var(--muted); font-size: .92rem; }
 
-    .options {
-      display: grid;
-      gap: 12px;
-    }
+    .section { margin-top: 22px; padding: clamp(22px, 4vw, 34px); }
+    .section-title { margin: 0 0 14px; font-size: clamp(1.45rem, 3.2vw, 2.2rem); line-height: 1.35; }
+    .mini { color: var(--muted); font-size: .95rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.70); border: 1px solid rgba(255,255,255,.85); font-weight: 800; color: #667085; font-size: .88rem; }
 
+    .progress-wrap { display: none; margin: 22px 0; }
+    .progress-text { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; color: #667085; font-weight: 900; font-size: .92rem; }
+    .progress-bar { height: 13px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.86); overflow: hidden; }
+    .progress-fill { width: 0%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green), var(--blue), var(--indigo), var(--violet)); transition: width .28s ease; }
+
+    .question-card { display: none; padding: clamp(22px, 4vw, 34px); }
+    .question-kicker { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .question-no { color: #667085; font-weight: 900; }
+    .question-title { margin: 0 0 18px; font-size: clamp(1.35rem, 3.2vw, 2rem); line-height: 1.55; }
+    .options { display: grid; gap: 12px; }
     .option {
       width: 100%;
       text-align: left;
       padding: 16px 18px;
       border-radius: 20px;
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(155, 170, 205, .22);
-      color: #596579;
-      box-shadow: 0 8px 22px rgba(120, 140, 180, .08);
-    }
-
-    .option.selected {
-      background: linear-gradient(90deg, rgba(255,199,212,.58), rgba(198,248,255,.58), rgba(215,209,255,.58));
-      border-color: rgba(140, 155, 195, .35);
-      color: #3f4958;
-    }
-
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-
-    .result-panel {
-      display: none;
-      margin-top: 26px;
-      padding: 30px;
-    }
-
-    .result-header {
-      text-align: center;
-      margin-bottom: 26px;
-    }
-
-    .result-heading {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      margin: 0 0 12px;
-      font-weight: 900;
-      line-height: 1.25;
-      color: transparent;
-      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-
-    .chart-wrap {
-      max-width: 680px;
-      margin: 0 auto 30px;
-      padding: 18px;
-      border-radius: 24px;
-      background: rgba(255,255,255,.68);
-    }
-
-    .top3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 24px 0;
-    }
-
-    .top-card {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.70);
-      border: 1px solid rgba(255,255,255,.8);
-      box-shadow: 0 12px 28px rgba(130, 145, 180, .10);
-      border-top: 7px solid var(--cat-color);
-    }
-
-    .rank {
-      font-weight: 900;
-      color: #7e86ad;
-      margin-bottom: 8px;
-    }
-
-    .top-title,
-    .report-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .top-card h3,
-    .category-report h3 {
-      margin: 0;
-      color: #444f60;
-      line-height: 1.45;
-    }
-
-    .message-box {
-      margin: 22px 0;
-      padding: 22px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, rgba(255,247,251,.88), rgba(246,251,255,.9));
-      border: 1px solid rgba(255,255,255,.82);
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .category-report {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.70);
-      border: 1px solid rgba(155, 170, 205, .16);
-      border-top: 7px solid var(--cat-color);
-    }
-
-    .score-line {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .mini-bar {
-      flex: 1;
-      height: 9px;
-      border-radius: 999px;
-      background: rgba(210, 220, 238, .55);
-      overflow: hidden;
-    }
-
-    .mini-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: var(--cat-color);
-    }
-
-    .relation-box {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 18px;
       background: rgba(255,255,255,.76);
-      border: 1px solid rgba(155,170,205,.18);
+      border: 1px solid rgba(148,163,184,.20);
+      color: #556176;
+      box-shadow: 0 8px 22px rgba(120,140,180,.07);
+      line-height: 1.65;
     }
+    .option.selected { background: linear-gradient(90deg, rgba(255,199,212,.64), rgba(198,248,255,.62), rgba(226,215,255,.62)); border-color: rgba(140,155,195,.38); color: #344054; }
+    .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
 
-    .relation-box h4 {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-      color: #556277;
-    }
-
-    .relation-box p {
-      margin: 0 0 8px;
-      font-size: 0.94rem;
-      color: #5e697c;
-    }
-
-    .relation-box p:last-child { margin-bottom: 0; }
-
-    .footer-note {
-      margin-top: 24px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .catch-copy {
-      margin: 28px auto 0;
-      text-align: center;
-      font-size: clamp(1.25rem, 3vw, 2rem);
-      font-weight: 900;
-      letter-spacing: .08em;
-      color: transparent;
-      background: linear-gradient(90deg, var(--mental), var(--health), var(--work), var(--money), var(--learning), var(--hobby), var(--living), var(--relation));
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-
-    @media (max-width: 860px) {
-      .category-cover { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
+    .result-panel { display: none; margin-top: 24px; padding: clamp(22px, 4vw, 36px); }
+    .result-hero { text-align: center; }
+    .type-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; color: #fff; font-weight: 900; box-shadow: 0 12px 28px rgba(148,163,184,.22); }
+    .result-title { margin: 18px 0 8px; font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.18; }
+    .result-lead { max-width: 820px; margin: 0 auto; color: #566176; font-size: 1.04rem; font-weight: 700; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+    .result-card { padding: 20px; border-radius: 24px; background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.88); box-shadow: 0 12px 30px rgba(120,140,180,.07); }
+    .result-card h3 { margin: 0 0 10px; font-size: 1.14rem; }
+    .result-card p { margin: 0; color: #596579; }
+    .chart-wrap { margin: 26px auto 0; max-width: 620px; padding: 18px; border-radius: 24px; background: rgba(255,255,255,.70); }
+    .next-list { display: grid; gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
+    .next-list li { padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.72); color: #596579; font-weight: 700; }
+    .offer { margin-top: 26px; padding: clamp(22px, 4vw, 34px); border-radius: 28px; background: linear-gradient(135deg, rgba(255,154,162,.18), rgba(126,214,223,.20), rgba(200,162,200,.18)); border: 1px solid rgba(255,255,255,.88); text-align: center; }
+    .offer h3 { margin: 8px 0 10px; font-size: clamp(1.45rem, 3.2vw, 2.35rem); line-height: 1.35; }
+    .offer p { max-width: 760px; margin: 0 auto 16px; color: #566176; font-weight: 700; }
+    .slots { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78); color: #ef476f; font-weight: 900; }
+    .footer-note { margin-top: 22px; text-align: center; color: #667085; font-size: .88rem; }
 
     @media (max-width: 760px) {
-      .hero, .question-card, .result-panel { padding: 24px 18px; }
-      .top3, .category-grid { grid-template-columns: 1fr; }
+      .empathy, .result-grid { grid-template-columns: 1fr; }
       .nav-buttons { flex-direction: column; }
       .nav-buttons button { width: 100%; }
+      .progress-text { flex-direction: column; gap: 2px; }
     }
   </style>
 </head>
 <body>
   <main class="app">
-    <section class="hero" id="intro">
+    <section class="hero glass" id="intro">
       <img src="./logo.png" alt="Happy Life Rainbow™ ロゴ" class="brand-logo" />
-      <div class="badge">Happy Life Rainbow™ × 50歳からのキャリア</div>
-      <h1>キャリアバランス診断テスト<br>（簡易版）</h1>
-      <p class="subtitle">今後のあなたのキャリアを予測する簡易テスト</p>
-      <div class="lead">
-        50歳は、人生の虹をもう一度整える節目です。<br>
-        ハッピーライフレインボー™の8カテゴリーから、仕事だけに偏らない「これからのキャリアの現在地」を見つめます。
+      <div class="badge">Happy Life Rainbow™ × 50歳からのキャリア再設計</div>
+      <h1><span class="rainbow-text">50歳からの<br>キャリア虹診断</span></h1>
+      <p class="subtitle">この先の働き方に、もう一度あなたらしい色を。3分で“セカンドキャリアの芽”を見つける簡易診断です。</p>
+      <div class="empathy" aria-label="共感チェック">
+        <div>□ このままでいいのかな、とふと感じる</div>
+        <div>□ 役職や肩書きが変わった後の自分が気になる</div>
+        <div>□ 転職・副業・独立・再雇用、何から考えるべきか迷う</div>
+        <div>□ まだ誰かの役に立てるはず、という思いがある</div>
       </div>
-      <div class="category-cover" id="categoryCover"></div>
-      <div class="start-area">
-        <button class="primary-btn" onclick="startDiagnosis()">診断をはじめる</button>
+      <div class="cta-row">
+        <button class="primary-btn" onclick="startDiagnosis()">私のこれからの可能性を見てみる</button>
+        <a class="ghost-btn link-btn" href="#about">診断でわかること</a>
+      </div>
+      <p class="note">診断結果はあなたを決めつけるものではなく、次の一歩を見つけるための入口です。</p>
+    </section>
+
+    <section class="section glass" id="about">
+      <h2 class="section-title">キャリアショックを、未来のサインに変える。</h2>
+      <p class="mini">50歳前後は、役割・収入・健康・家族・学び直しなど、仕事だけでは解けないテーマが重なりやすい時期です。この診断では、ハッピーライフレインボー™の8カテゴリーを背景にしながら、あなたのセカンドキャリアの方向性を7つの虹タイプで可視化します。</p>
+      <div class="chips">
+        <span class="chip">役職定年の不安</span><span class="chip">経験の棚卸し</span><span class="chip">副業・独立</span><span class="chip">再雇用・転職</span><span class="chip">学び直し</span><span class="chip">家族・暮らし</span><span class="chip">社会貢献</span>
       </div>
     </section>
 
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-text">
-        <span id="progressLabel">1 / 24</span>
-        <span>心の虹を整えています</span>
+        <span id="progressLabel">1 / 10</span>
+        <span>あなたの虹の色を読み解いています</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
-    <section class="card question-card" id="questionCard">
-      <div class="category-chip" id="categoryChip"></div>
+    <section class="question-card glass" id="questionCard">
+      <div class="question-kicker">
+        <div class="badge" id="questionTheme">Career Question</div>
+        <div class="question-no" id="questionNo">Q1</div>
+      </div>
       <h2 class="question-title" id="questionTitle"></h2>
       <div class="options" id="options"></div>
       <div class="nav-buttons">
@@ -484,247 +257,204 @@
       </div>
     </section>
 
-    <section class="result-panel" id="resultPanel">
-      <div class="result-header">
-        <div class="badge">Happy Life Rainbow™ 診断結果</div>
-        <h2 class="result-heading">あなたのキャリアバランス</h2>
-        <p>点数が低い項目ほど、50歳からのキャリアを軽やかに整えるための大切なサインです。</p>
+    <section class="result-panel glass" id="resultPanel">
+      <div class="result-hero">
+        <div class="type-pill" id="typePill">診断結果</div>
+        <h2 class="result-title"><span class="rainbow-text" id="resultTitle"></span></h2>
+        <p class="result-lead" id="resultLead"></p>
       </div>
-      <div class="chart-wrap">
-        <canvas id="resultChart"></canvas>
+      <div class="chart-wrap"><canvas id="resultChart"></canvas></div>
+      <div class="result-grid">
+        <article class="result-card">
+          <h3>あなたの強み</h3>
+          <p id="strengthText"></p>
+        </article>
+        <article class="result-card">
+          <h3>今、気をつけたい落とし穴</h3>
+          <p id="cautionText"></p>
+        </article>
+        <article class="result-card">
+          <h3>今日からできる小さな一歩</h3>
+          <ul class="next-list" id="actionList"></ul>
+        </article>
+        <article class="result-card">
+          <h3>おすすめ相談テーマ</h3>
+          <p id="themeText"></p>
+        </article>
       </div>
-      <div class="message-box" id="overallMessage"></div>
-      <h2>今、特に見つめたいTOP3</h2>
-      <div class="top3" id="top3"></div>
-      <h2>ハッピーライフレインボー™ 8カテゴリー別レポート</h2>
-      <div class="category-grid" id="categoryReports"></div>
-      <div class="start-area">
-        <button class="primary-btn" onclick="restartDiagnosis()">もう一度診断する</button>
+
+      <div class="offer">
+        <div class="slots">リリース記念・先着3名様限定</div>
+        <h3>キャリアコンサルタント技能士1級による<br>無料カウンセリングをプレゼント</h3>
+        <p>診断結果をもとに、あなたの経験・不安・これからの可能性を一緒に整理します。転職をすすめる相談ではなく、あなたらしい次の働き方を見つけるための時間です。</p>
+
+        <div class="result-grid" style="margin-top:22px; text-align:left;">
+          <article class="result-card">
+            <h3>応募方法 1</h3>
+            <p>Xアカウント「コーチャ｜人生後半に虹をかける人🌈（@xcoach_a）」をフォローしてください。</p>
+          </article>
+          <article class="result-card">
+            <h3>応募方法 2</h3>
+            <p>この診断アプリのリリース投稿をリポストしてください。</p>
+          </article>
+          <article class="result-card">
+            <h3>応募方法 3</h3>
+            <p>「コーチャ｜人生後半に虹をかける人🌈（@xcoach_a）」宛に、DMで「キャリア虹診断を受けました」とお送りください。</p>
+          </article>
+          <article class="result-card">
+            <h3>先着確認</h3>
+            <p>フォロー・リポスト・DMの3つが確認できた方から、先着3名様へ無料カウンセリングのご案内をお送りします。</p>
+          </article>
+        </div>
+
+        <div class="cta-row">
+          <a class="primary-btn link-btn" href="https://x.com/xcoach_a"},{ target="_blank" rel="noopener">Xで応募する</a>
+          <button class="ghost-btn" onclick="restartDiagnosis()">もう一度診断する</button>
+        </div>
+        <p class="note">※ フォロー・リポスト・DMの3つが確認できた方から、先着順でご案内します。</p>
       </div>
-      <p class="footer-note">この診断は自己理解のための簡易テストです。大切な決断の前には、信頼できる人や専門家との対話も取り入れてください。</p>
-      <div class="catch-copy">心に虹のかかる毎日を。</div>
+      <p class="footer-note">Happy Life Rainbow™｜心に虹のかかる毎日を。</p>
     </section>
   </main>
 
   <script>
-    const iconPaths = {
-      mental: `<path class="line" d="M150 220 C105 184 70 154 78 114 C84 83 122 75 150 109 C178 75 216 83 222 114 C230 154 195 184 150 220Z" /><circle cx="150" cy="150" r="5" fill="currentColor" /><path class="thin line" d="M95 78 L82 58 M125 62 L118 38 M150 55 L150 28 M175 62 L182 38 M205 78 L218 58" />`,
-      health: `<path class="line" d="M55 178 C95 138 125 218 150 178 C175 138 205 218 245 178" /><path class="line" d="M55 216 C95 176 125 256 150 216 C175 176 205 256 245 216" /><circle class="line" cx="150" cy="122" r="22" /><circle cx="150" cy="72" r="7" fill="currentColor" /><circle cx="150" cy="42" r="5" fill="currentColor" />`,
-      work: `<path class="line" d="M50 205 H250" /><path class="line" d="M105 205 A45 45 0 0 1 195 205" /><path class="thin line" d="M150 42 V130 M150 42 L132 62 M150 42 L168 62" /><path class="thin line" d="M82 150 L58 132 M105 128 L92 100 M128 115 L120 82 M172 115 L180 82 M195 128 L208 100 M218 150 L242 132" />`,
-      money: `<path class="line" d="M72 176 C72 116 116 74 172 84 C225 94 246 150 221 195 C195 241 132 245 96 207" /><path class="thin line" d="M205 84 C218 56 235 44 260 40 C264 68 252 88 225 100" /><path class="thin line" d="M198 86 C183 64 161 58 140 62 C145 88 166 101 195 100" /><path class="thin line" d="M92 156 C84 166 84 178 92 188" /><circle cx="94" cy="172" r="5" fill="currentColor" />`,
-      learning: `<path class="line" d="M48 180 C92 162 128 177 150 236 C172 177 208 162 252 180" /><path class="line" d="M65 212 C104 194 131 205 150 236 C169 205 196 194 235 212" /><path class="line" d="M82 242 C115 224 138 229 150 236 C162 229 185 224 218 242" /><path class="thin line" d="M150 68 C156 96 166 106 194 112 C166 118 156 128 150 156 C144 128 134 118 106 112 C134 106 144 96 150 68Z" />`,
-      hobby: `<path class="line" d="M101 218 C57 181 69 91 135 76 C196 62 206 126 178 160 C150 194 93 177 122 130 C148 88 217 112 197 178 C184 220 121 235 103 184 C88 141 161 125 172 172 C182 215 222 225 247 193" /><path class="thin line" d="M228 66 C234 91 243 100 268 106 C243 112 234 121 228 146 C222 121 213 112 188 106 C213 100 222 91 228 66Z" /><circle cx="236" cy="164" r="5" fill="currentColor" />`,
-      living: `<path class="line" d="M55 130 L150 48 L245 130" /><path class="line" d="M75 135 V207 C75 238 100 248 128 248 H172 C200 248 225 238 225 207 V135" /><path class="line" d="M150 230 C117 202 104 181 111 158 C118 135 144 133 150 154 C156 133 182 135 189 158 C196 181 183 202 150 230Z" /><path class="thin line" d="M132 88 H168 V124 H132 Z M150 88 V124 M132 106 H168" />`,
-      relation: `<circle class="line" cx="117" cy="158" r="72" /><circle class="line" cx="183" cy="158" r="72" /><path class="thin line" d="M150 187 C132 172 125 160 129 148 C133 136 146 135 150 146 C154 135 167 136 171 148 C175 160 168 172 150 187Z" /><path class="thin line" d="M150 52 V34 M126 62 L112 48 M174 62 L188 48" />`
+    const colors = {
+      challenge: '#ff8fa3', experience: '#ffb86b', freedom: '#f6d365', stable: '#8bdc9b',
+      specialist: '#79d6df', introspection: '#8fb3ff', contribution: '#c6a4f4'
     };
 
-    function iconSvg(key, color) {
-      return `<svg viewBox="0 0 300 300" aria-hidden="true" style="color:${color};--cat-color:${color}">
-        <style>.line{fill:none;stroke:currentColor;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.thin{stroke-width:6}</style>
-        ${iconPaths[key]}
-      </svg>`;
-    }
-
-    const categories = [
-      {
-        key: "mental",
-        en: "MENTAL",
-        name: "心・思考のあり方",
-        shortName: "心",
-        color: "#FF9AA2",
-        concept: "思い込み・自己信頼・未来への見方。すべての虹の起点。",
-        questions: [
-          "50歳を迎えた今、過去の肩書きや評価に縛られず、これからの自分を考えられていますか？",
-          "『もう遅い』『今さら変われない』という思い込みに気づき、何かやってみようという気持ちや行動につなげられていますか？",
-          "今感じている不安や焦りを、これからの『キャリアを見直す大切なサイン』として受け止められていますか？"
-        ],
-        low: "心・思考のあり方に、これまで頑張ってきた分だけの重さが残っているかもしれません。50歳からのキャリアは、根性で押し切る時期ではなく、無意識のブレーキに気づく時期です。『もう遅い』ではなく『ここから何を選び直せるか』へ視点を移すことが、あなたの虹の起点になります。",
-        mid: "自分の内側を見つめる力は育っていますが、まだ過去の評価や役割に引っ張られる場面がありそうです。50歳からは、誰かの期待に応えるだけでなく、自分の本音を丁寧に聞くことがキャリアの質を変えます。小さな違和感を見逃さないことが次の扉です。",
-        high: "心・思考の土台が整い、自分の未来を前向きに見つめられています。これはハッピーライフレインボーのすべての色を輝かせる起点です。次は、その気づきを仕事・暮らし・人間関係の具体的な選択へつなげていきましょう。"
+    const types = {
+      challenge: {
+        name: 'レッド：再挑戦タイプ',
+        short: '再挑戦',
+        lead: 'まだ挑戦したい気持ちが、あなたの中で静かに燃えています。変化を恐れない力を、経験という土台の上で活かせる人です。',
+        strength: '決断力、行動力、未知の領域へ踏み出す勇気。年齢を理由に可能性を閉じない姿勢が魅力です。',
+        caution: '焦って大きく変えすぎると、収入・家族・健康とのバランスが崩れやすくなります。小さな実験から始めることが鍵です。',
+        actions: ['やってみたい働き方を3つ書き出す', '半年以内に試せる小さな挑戦を1つ決める', '挑戦に必要な安全ラインを数字で確認する'],
+        theme: '転職・独立・副業・新規事業など、挑戦の選択肢を現実的に比較する相談がおすすめです。'
       },
-      {
-        key: "health",
-        en: "HEALTH",
-        name: "体とエネルギー",
-        shortName: "健康",
-        color: "#FFB347",
-        concept: "体力・睡眠・心身の循環。長く輝く働き方の燃料。",
-        questions: [
-          "今の働き方は、50代の体力・睡眠・回復力に合ったペースになっていますか？",
-          "疲れや不調を『年齢だから仕方ない』で片づけず、早めに整える習慣がありますか？",
-          "これからも働き続けるために、健康をキャリア資産として意識していますか？"
-        ],
-        low: "健康とエネルギーが後回しになり、頑張りで乗り切る癖が残っているかもしれません。50歳からは、無理がきくかどうかではなく、長く輝ける循環を作れるかが大切です。休むことは停滞ではなく、未来の働き方を守る準備です。",
-        mid: "体の声には気づき始めていますが、日常の仕組みとして整える余地があります。50歳からのキャリアでは、体調管理そのものが信用・判断力・継続力に直結します。疲れ切る前に整える仕組みを持つことで、未来の不安は静かに小さくなります。",
-        high: "体とエネルギーを大切にできています。これは50歳からのキャリアを支える大きな資産です。今の良い習慣を守りながら、仕事量・休息・楽しみの流れをさらに軽やかに整えていきましょう。"
+      experience: {
+        name: 'オレンジ：経験活用タイプ',
+        short: '経験活用',
+        lead: 'これまで積み重ねてきた経験を、次の誰かの役に立てたい気持ちが強いタイプです。過去の実績が、未来の価値に変わるタイミングです。',
+        strength: '現場感、育成力、調整力、信頼関係づくり。見えにくい経験知を言語化できると、大きな武器になります。',
+        caution: '自分では当たり前にできることほど、価値として見落としがちです。肩書きではなく「何を任せられる人か」で整理しましょう。',
+        actions: ['過去に感謝された場面を10個書く', '後輩や周囲からよく頼まれることを整理する', '自分の経験を一言で説明する肩書きを仮で作る'],
+        theme: '経験の棚卸し、社内外での価値の伝え方、顧問・講師・育成役への展開相談がおすすめです。'
       },
-      {
-        key: "work",
-        en: "WORK",
-        name: "仕事・役割",
-        shortName: "仕事",
-        color: "#FFD93D",
-        concept: "経験・役割・働き方。これまでの積み重ねを未来へ活かす軸。",
-        questions: [
-          "これまでの経験や実績を、これからの仕事でどう活かすか言葉にできていますか？",
-          "今の役職・肩書きが変わっても、自分の価値を説明できる準備がありますか？",
-          "再雇用・転職・副業・独立などの選択肢について、収入・時間・やりがい・生活への影響を比べながら考えられていますか？"
-        ],
-        low: "仕事・役割の未来像が少し曖昧になっているかもしれません。50歳からは、過去の肩書きよりも『何を任せられる人か』『誰の役に立てる人か』が問われます。あなたの経験には、まだ言語化されていない価値があります。そこに光を当てることが次の一歩です。",
-        mid: "仕事の方向性は見え始めていますが、選択肢を具体化する余地があります。今の延長線だけで考えると、本当に望む働き方を小さく見積もってしまうことがあります。経験の棚卸しと未来の働き方の比較を、早めに始めてみましょう。",
-        high: "仕事・役割の軸が整っています。50歳からのキャリアにおいて、これは大きな安心になります。次は、その価値を社内外へ伝え、必要な人に届く形へ整えていく段階です。"
+      freedom: {
+        name: 'イエロー：自由設計タイプ',
+        short: '自由設計',
+        lead: '会社や役割に合わせるだけではなく、自分の時間・暮らし・喜びを軸に働き方を組み立てたいタイプです。',
+        strength: '柔軟性、生活感覚、バランス感覚。無理に成果だけを追わず、人生全体から働き方を考えられます。',
+        caution: '自由を求めるほど、収入や生活リズムの設計が曖昧になることがあります。自由には、やさしい仕組みが必要です。',
+        actions: ['理想の平日と休日を紙に描く', '減らしたい働き方・増やしたい時間を分ける', '必要な月収と望む時間の使い方を並べて見る'],
+        theme: 'ワークライフバランス、再雇用後の暮らし、副業と時間設計、家族との対話がおすすめです。'
       },
-      {
-        key: "money",
-        en: "MONEY",
-        name: "お金・安心設計",
-        shortName: "お金",
-        color: "#6BCB77",
-        concept: "収入・支出・将来設計。安心して選ぶための土台。",
-        questions: [
-          "今後の収入・支出・老後資金について、現実的な見通しを持っていますか？",
-          "お金の不安だけでキャリアを決めず、安心とやりがいのバランスを考えられていますか？",
-          "収入源を会社だけに頼らない可能性について、少しでも情報収集していますか？"
-        ],
-        low: "お金の見通しが曖昧なまま、心の奥に不安が残っているかもしれません。不安は見ないほど大きくなり、キャリアの選択を狭めてしまいます。50歳の今こそ、数字を責めるためではなく、安心して選ぶ力を取り戻すために現状を見える化しましょう。",
-        mid: "お金への意識はありますが、働き方とのつながりをもう少し整理できそうです。収入・支出・安心・やりがいを別々に考えると迷いが増えます。ハッピーライフレインボーの一色として、お金を未来の自由を支える味方にしていきましょう。",
-        high: "お金と安心設計を現実的に考えられています。50歳からのキャリアでは、この土台が自由な選択を支えます。守る資産と挑戦に使う資源を分けて考えると、さらに軽やかに動けます。"
+      stable: {
+        name: 'グリーン：安定移行タイプ',
+        short: '安定移行',
+        lead: '急な変化よりも、今ある土台を守りながら次の準備を進めたいタイプです。慎重さは弱さではなく、未来を守る知恵です。',
+        strength: '現実を見る力、継続力、リスク管理。周囲に安心感を与えながら、着実に前へ進めます。',
+        caution: '準備を大切にするあまり、行動が先延ばしになることがあります。小さく試すことで不安は整理されていきます。',
+        actions: ['今の仕事を続けながらできる準備を3つ書く', '収入・健康・家族の不安を見える化する', '3か月以内に情報収集するテーマを1つ決める'],
+        theme: '役職定年後の働き方、再雇用か転職か、副業準備、家計とキャリアのバランス相談がおすすめです。'
       },
-      {
-        key: "learning",
-        en: "LEARNING",
-        name: "学び・成長",
-        shortName: "学び",
-        color: "#4ECDC4",
-        concept: "学び直し・変化対応。経験を時代につなぐ橋。",
-        questions: [
-          "AIやデジタルツールなど、新しい仕事環境の変化に前向きに触れていますか？",
-          "今の専門性に加えて、これから必要になる知識を学ぶ時間を確保できていますか？",
-          "年齢を理由にせず、知らないことを人に聞いたり試したりできていますか？"
-        ],
-        low: "学び・成長の色が少し弱まり、変化への距離感ができているかもしれません。50歳からの学び直しは、若い人と競うためではありません。あなたの経験を今の時代につなぎ直すための橋です。小さく試すだけでも、未来の景色は変わります。",
-        mid: "学ぶ意欲はありますが、継続の仕組みがまだ弱い状態です。忙しい時ほど学びは後回しになりがちですが、50歳からのキャリアでは学びが選択肢を広げます。週1回30分でも、未来の自分に投資する時間を固定してみましょう。",
-        high: "変化を受け入れ、学び続ける姿勢があります。これは50歳からのキャリアで大きな武器になります。学んだことを仕事や人との関わりに活かすことで、あなたの経験はさらに新しい価値へ変わります。"
+      specialist: {
+        name: 'ブルー：専門深化タイプ',
+        short: '専門深化',
+        lead: '自分の専門性や資格、経験値を磨き直し、長く選ばれる働き方を目指すタイプです。学び直しが未来の扉になります。',
+        strength: '探究心、誠実さ、専門性への信頼。経験に新しい知識を掛け合わせることで、価値が再び輝きます。',
+        caution: '学ぶこと自体が目的になりすぎると、実際の仕事や収入につながりにくくなります。誰に届ける専門性かを明確にしましょう。',
+        actions: ['今の専門性に足したい知識を1つ選ぶ', '学んだことを誰に役立てたいか書く', '30分だけ新しいツールや情報に触れる'],
+        theme: '資格・専門性の活かし方、AIやデジタル時代の学び直し、職務経歴の再設計がおすすめです。'
       },
-      {
-        key: "hobby",
-        en: "HOBBY",
-        name: "趣味・喜び",
-        shortName: "趣味",
-        color: "#7ED6DF",
-        concept: "心の余白・創造性・楽しみ。働く意味を回復させる彩り。",
-        questions: [
-          "仕事や家族の役割とは別に、自分のために心が喜ぶ時間を持てていますか？",
-          "趣味や好きなことを、これからの働き方や人とのつながりのヒントとして活かせていますか？",
-          "成果や評価に直結しなくても、純粋に楽しむ時間を自分に許せていますか？"
-        ],
-        low: "趣味・喜びの色が薄くなり、役割や責任が人生の中心になりすぎているかもしれません。50歳からのキャリアでは、心の余白が創造性と判断力を取り戻します。楽しむことは逃げではなく、これからの働き方に新しい光を入れる時間です。",
-        mid: "喜びの時間はありますが、キャリアとのつながりとしてはまだ見えにくい状態です。好きなことには、あなたらしい価値観や才能の種が隠れています。小さな楽しみを予定に入れることから、次の可能性が動き出します。",
-        high: "趣味や喜びを大切にできています。50歳からのキャリアにおいて、これは心の回復力と創造性を支える大切な色です。楽しみの中にある才能や人とのつながりを、これからの働き方にも活かしていきましょう。"
+      introspection: {
+        name: 'インディゴ：内省探求タイプ',
+        short: '内省探求',
+        lead: 'すぐに答えを出すより、まず自分の価値観や本音を丁寧に見つめたいタイプです。深く考える力が、未来の軸になります。',
+        strength: '自己理解、誠実な問い、違和感に気づく感性。表面的な条件ではなく、心から納得できる道を探せます。',
+        caution: '考え続けるほど選択肢が増え、動けなくなることがあります。完璧な答えより、仮の一歩を大切にしましょう。',
+        actions: ['今の違和感を文章で3行書く', '本当は大切にしたいことを5つ挙げる', '信頼できる人に今の迷いを話してみる'],
+        theme: '価値観整理、キャリアのモヤモヤの言語化、人生後半のビジョン設計相談がおすすめです。'
       },
-      {
-        key: "living",
-        en: "LIVING",
-        name: "暮らし・環境",
-        shortName: "暮らし",
-        color: "#5DADE2",
-        concept: "住まい・時間・生活リズム。キャリアを支える日常の器。",
-        questions: [
-          "今の暮らしや生活リズムは、これからの働き方を支える環境になっていますか？",
-          "親の介護、子どもの独立、夫婦関係など、今後の生活変化を考え始めていますか？",
-          "仕事を変える・続ける・減らす場合の暮らし方を、具体的に想像できていますか？"
-        ],
-        low: "暮らし・環境の見直しが後回しになっているかもしれません。50歳からのキャリアは、仕事だけを変えても整わないことがあります。住まい、時間、家族の変化、日々のリズムが、あなたの未来の器になります。まずは暮らしの中の小さな負担に気づくことから始めましょう。",
-        mid: "暮らしの変化に気づき始めていますが、具体的な備えはこれからのようです。介護や家族構成の変化は、起きてから考えると選択肢が狭まりがちです。早めの対話と情報収集が、これからのキャリアの安心につながります。",
-        high: "暮らし・環境をキャリアの一部として考えられています。50歳からは、日常の器が整うほど仕事の選択も軽やかになります。今の環境を活かしながら、さらに余白のある暮らし方へ整えていきましょう。"
-      },
-      {
-        key: "relation",
-        en: "RELATION",
-        name: "人間関係・つながり",
-        shortName: "人間関係",
-        color: "#C8A2C8",
-        concept: "家族・仲間・社内外の縁。次の扉を開く響き合い。",
-        questions: [
-          "仕事の相談や情報交換ができる相手を、社内外に複数持てていますか？",
-          "同世代だけでなく、若い世代や異なる立場の人とも自然に関われていますか？",
-          "家族や周囲の期待だけでなく、自分の人生についても対話できていますか？"
-        ],
-        low: "人間関係・つながりが少し内向きになっているかもしれません。50歳からのキャリアは、能力だけでなく『誰と響き合えるか』で広がります。一人で抱え込まず、安心して話せる関係を少しずつ外へ広げることが、次の扉を開きます。",
-        mid: "つながりはありますが、今後のキャリア資源として活かしきれていない可能性があります。近況報告、相談、紹介、若い世代との対話など、小さな接点が新しい流れを生みます。人との関係は、あなたの虹を外の世界へ広げる橋です。",
-        high: "豊かなつながりを育てられています。50歳からのキャリアにおいて、人間関係は次の扉を開く大切な鍵です。受け取るだけでなく、あなたの経験を分かち合う場を持つと、さらに良い循環が生まれます。"
+      contribution: {
+        name: 'バイオレット：貢献使命タイプ',
+        short: '貢献使命',
+        lead: '収入や肩書きだけでなく、誰かの役に立つこと、社会や地域に貢献することに心が向くタイプです。',
+        strength: '共感力、支援力、使命感。自分の経験を人の希望に変える働き方に可能性があります。',
+        caution: '人のためを優先しすぎると、自分の収入・健康・家族の安心が後回しになりがちです。貢献と自分の幸せを両立させましょう。',
+        actions: ['誰のどんな困りごとに役立ちたいか書く', '地域・教育・福祉・育成など関心領域を選ぶ', '無理なく続けられる貢献の形を考える'],
+        theme: '社会貢献型キャリア、地域活動、支援職、研修・ mentoring・人生経験の活かし方相談がおすすめです。'
       }
-    ];
+    };
 
-    const options = [
-      { label: "全くできていない", value: 1 },
-      { label: "気になっているができていない", value: 2 },
-      { label: "どちらとも言えない", value: 3 },
-      { label: "ほぼできている", value: 4 },
-      { label: "できている", value: 5 }
+    const questions = [
+      { theme: '現在地', text: '50歳を迎える今、仕事や役割の変化について一番近い気持ちは？', options: [
+        ['まだ新しいことに挑戦したい', 'challenge'], ['経験を誰かに活かしたい', 'experience'], ['安定しながら準備したい', 'stable'], ['まず自分の本音を整理したい', 'introspection']
+      ]},
+      { theme: '未来の優先順位', text: 'これからの働き方で、もっとも大切にしたいものは？', options: [
+        ['やりがいと挑戦', 'challenge'], ['時間と暮らしの自由', 'freedom'], ['収入と安心', 'stable'], ['人や社会への貢献', 'contribution']
+      ]},
+      { theme: 'キャリアショック', text: '肩書きや役職が変わった後に、一番不安に感じることは？', options: [
+        ['自分の価値が伝わるか', 'experience'], ['収入や生活が守れるか', 'stable'], ['学び直しについていけるか', 'specialist'], ['何を目指せばいいか分からない', 'introspection']
+      ]},
+      { theme: '働き方の選択肢', text: '今後、少し気になっている働き方は？', options: [
+        ['転職・独立・副業など新しい挑戦', 'challenge'], ['顧問・講師・後輩育成など経験活用', 'experience'], ['再雇用や今の延長で無理なく移行', 'stable'], ['地域・支援・社会貢献につながる活動', 'contribution']
+      ]},
+      { theme: '強みの源泉', text: 'あなたの強みとして、最もしっくりくるものは？', options: [
+        ['決めたら動ける行動力', 'challenge'], ['現場経験や人を育てる力', 'experience'], ['専門知識や学び続ける力', 'specialist'], ['人の気持ちに寄り添う力', 'contribution']
+      ]},
+      { theme: '変化への向き合い方', text: '新しい環境や学びに対して、今の自分は？', options: [
+        ['試しながら進みたい', 'challenge'], ['必要なら学び直したい', 'specialist'], ['少し怖いので準備してから動きたい', 'stable'], ['変わる前に自分の軸を確認したい', 'introspection']
+      ]},
+      { theme: '人生全体の設計', text: '仕事以外で、これから特に整えたいものは？', options: [
+        ['自由な時間と生活リズム', 'freedom'], ['健康と無理のないペース', 'stable'], ['家族や周囲との対話', 'introspection'], ['人とのつながりや貢献の場', 'contribution']
+      ]},
+      { theme: '学び直し', text: '今の経験に何かを足すなら、何を選びたいですか？', options: [
+        ['新規事業や副業の実践知', 'challenge'], ['マネジメントや育成の言語化', 'experience'], ['資格・専門スキル・AI活用', 'specialist'], ['対話・支援・カウンセリング的な力', 'contribution']
+      ]},
+      { theme: '本音のサイン', text: '心の奥で、今いちばん求めている言葉に近いものは？', options: [
+        ['もう一度、挑戦していい', 'challenge'], ['私の経験には価値がある', 'experience'], ['もっと自分らしい時間で生きたい', 'freedom'], ['焦らず本音を見つけたい', 'introspection']
+      ]},
+      { theme: '相談したいこと', text: '無料カウンセリングで相談するとしたら、今いちばん話したいことは？', options: [
+        ['転職・独立・副業の可能性', 'challenge'], ['経験や強みの棚卸し', 'experience'], ['収入・再雇用・生活設計', 'stable'], ['人生後半のビジョンや使命', 'contribution']
+      ]}
     ];
-
-    const questions = categories.flatMap(category =>
-      category.questions.map(text => ({ categoryKey: category.key, categoryName: category.name, text }))
-    );
 
     let currentIndex = 0;
     let answers = Array(questions.length).fill(null);
     let chartInstance = null;
 
-    function renderCoverCategories() {
-      const cover = document.getElementById("categoryCover");
-      cover.innerHTML = categories.map(category => `
-        <div class="cover-category" style="--cat-color:${category.color}">
-          ${iconSvg(category.key, category.color)}
-          <div class="jp">${category.shortName}</div>
-          <div class="en">${category.en}</div>
-        </div>
-      `).join("");
-    }
-
     function startDiagnosis() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("progressWrap").style.display = "block";
-      document.getElementById("questionCard").style.display = "block";
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('about').style.display = 'none';
+      document.getElementById('progressWrap').style.display = 'block';
+      document.getElementById('questionCard').style.display = 'block';
       renderQuestion();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderQuestion() {
       const q = questions[currentIndex];
-      const category = categories.find(item => item.key === q.categoryKey);
-      document.getElementById("categoryChip").style.setProperty("--cat-color", category.color);
-      document.getElementById("categoryChip").innerHTML = `${iconSvg(category.key, category.color)}<span>${category.name}</span>`;
-      document.getElementById("questionTitle").textContent = q.text;
-      document.getElementById("progressLabel").textContent = `${currentIndex + 1} / ${questions.length}`;
-      document.getElementById("progressFill").style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
+      document.getElementById('questionTheme').textContent = q.theme;
+      document.getElementById('questionNo').textContent = 'Q' + (currentIndex + 1);
+      document.getElementById('questionTitle').textContent = q.text;
+      document.getElementById('progressLabel').textContent = (currentIndex + 1) + ' / ' + questions.length;
+      document.getElementById('progressFill').style.width = ((currentIndex + 1) / questions.length * 100) + '%';
+      document.getElementById('prevBtn').disabled = currentIndex === 0;
+      document.getElementById('nextBtn').textContent = currentIndex === questions.length - 1 ? '結果を見る' : '次へ';
+      document.getElementById('nextBtn').disabled = answers[currentIndex] === null;
 
-      const optionBox = document.getElementById("options");
-      optionBox.innerHTML = "";
-      options.forEach(option => {
-        const button = document.createElement("button");
-        button.className = "option" + (answers[currentIndex] === option.value ? " selected" : "");
-        button.textContent = option.label;
-        button.onclick = () => selectAnswer(option.value);
-        optionBox.appendChild(button);
-      });
-
-      document.getElementById("prevBtn").disabled = currentIndex === 0;
-      document.getElementById("nextBtn").textContent = currentIndex === questions.length - 1 ? "結果を見る" : "次へ";
-      document.getElementById("nextBtn").disabled = answers[currentIndex] === null;
+      document.getElementById('options').innerHTML = q.options.map(function(option, index) {
+        const selected = answers[currentIndex] === index ? ' selected' : '';
+        return '<button class="option' + selected + '" onclick="selectOption(' + index + ')">' + option[0] + '</button>';
+      }).join('');
     }
 
-    function selectAnswer(value) {
-      answers[currentIndex] = value;
+    function selectOption(index) {
+      answers[currentIndex] = index;
       renderQuestion();
-    }
-
-    function prevQuestion() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderQuestion();
-      }
     }
 
     function nextQuestion() {
@@ -737,261 +467,92 @@
       }
     }
 
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
     function calculateScores() {
-      return categories.map((category, index) => {
-        const related = questions
-          .map((q, i) => ({ ...q, answer: answers[i] }))
-          .filter(q => q.categoryKey === category.key);
-
-        const total = related.reduce((sum, q) => sum + q.answer, 0);
-        const max = related.length * 5;
-        const percent = Math.round((total / max) * 100);
-
-        return { ...category, total, percent, index };
+      const scores = Object.keys(types).reduce(function(acc, key) { acc[key] = 0; return acc; }, {});
+      answers.forEach(function(answerIndex, qIndex) {
+        const key = questions[qIndex].options[answerIndex][1];
+        scores[key] += 1;
       });
+      return scores;
     }
 
-    function getReport(category) {
-      if (category.percent <= 49) return category.low;
-      if (category.percent <= 73) return category.mid;
-      return category.high;
-    }
-
-    function getRelationData(scores, category) {
-      const index = scores.findIndex(item => item.key === category.key);
-      const prev = scores[(index - 1 + scores.length) % scores.length];
-      const next = scores[(index + 1) % scores.length];
-      const opposite = scores[(index + 4) % scores.length];
-      return { prev, next, opposite };
-    }
-
-    function relationLevelText(score) {
-      if (score <= 49) return "やや弱め";
-      if (score <= 73) return "中間";
-      return "比較的安定";
-    }
-
-    function getCategorySpecificRelation(category, opposite, prev, next) {
-      const map = {
-        mental: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、心の状態を現実の行動へつなげる両側の支えです。健康が落ちると気持ちも揺れやすく、人間関係が閉じると本音を確認しにくくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、内側の思考を未来の可能性へ開く鏡です。学びが高く心が低い場合、知識は増えているのに自信が追いつかない状態が見えます。`
-        },
-        health: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、体のエネルギーを守りながら仕事へ向かう流れです。心が張りつめ、仕事の負荷が強いほど、健康は静かに削られやすくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、体を回復させる喜びと余白の領域です。健康が低く趣味も低い場合、休むだけでなく楽しむ力まで後回しになっているサインです。`
-        },
-        work: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、働き続ける力と安心設計の両輪です。健康とお金のどちらかが大きく揺れると、仕事の選択が焦りや我慢に寄りやすくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、仕事を支える暮らしの器です。仕事が高く暮らしが低い場合、成果は出ていても生活側に負荷が蓄積している可能性があります。`
-        },
-        money: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、お金の不安を現実的な選択へ変える隣接領域です。仕事の方向性と学びの投資が整うほど、お金は怖いものではなく未来を支える資源になります。`,
-          opposite: `対面の「${opposite.shortName}」は、人とのつながりです。お金が低く人間関係も低い場合、相談できずに不安を一人で抱えやすい状態が見えます。`
-        },
-        learning: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、学びを続ける安心と喜びです。お金の不安が強すぎたり、楽しさが消えていると、学びが義務になりやすくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、学びを受け取る内側の土台です。学びが低く心も低い場合、能力不足ではなく『自分には無理』という思い込みが入口を塞いでいるかもしれません。`
-        },
-        hobby: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、喜びを未来と日常へ接続する流れです。学びと暮らしが整うほど、趣味は単なる息抜きではなく、次のキャリアの種になります。`,
-          opposite: `対面の「${opposite.shortName}」は、体とエネルギーです。趣味が低く健康も低い場合、心身の回復ルートそのものが細くなっているサインです。`
-        },
-        living: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、暮らしの余白と人との支えです。楽しみがなく、人間関係にも頼れない状態では、暮らしの負担を一人で抱え込みやすくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、仕事・役割です。暮らしが低く仕事が高い場合、仕事のために生活が後回しになっている可能性があります。`
-        },
-        relation: {
-          adjacent: `「${prev.shortName}」と「${next.shortName}」は、人との関係を支える暮らしと心の土台です。生活に余白がなく、心が硬くなると、相談や協力を受け取りにくくなります。`,
-          opposite: `対面の「${opposite.shortName}」は、お金・安心設計です。人間関係が低くお金の不安が高い場合、必要な情報や支援につながれず、選択肢が狭く見えてしまうことがあります。`
-        }
-      };
-      return map[category.key];
-    }
-
-    function getRelationInsight(category, scores) {
-      const { prev, next, opposite } = getRelationData(scores, category);
-      const neighborAvg = Math.round((prev.percent + next.percent) / 2);
-      const specific = getCategorySpecificRelation(category, opposite, prev, next);
-
-      let adjacentComment = "";
-      if (category.percent <= 49 && neighborAvg <= 55) {
-        adjacentComment = `隣り合う「${prev.shortName}」と「${next.shortName}」も同時に揺れているため、このテーマだけを単独で整えるより、周辺の領域も一緒に見直すことで変化が起きやすくなりそうです。`;
-      } else if (category.percent <= 49 && neighborAvg > 55) {
-        adjacentComment = `隣り合う「${prev.shortName}」と「${next.shortName}」には比較的支えがあるため、その強みを活かしながら「${category.shortName}」を整えていく流れがつくれそうです。`;
-      } else if (category.percent >= 74 && neighborAvg <= 55) {
-        adjacentComment = `「${category.shortName}」自体は安定していますが、隣り合う「${prev.shortName}」「${next.shortName}」に負荷がかかると、この安定感も揺れやすくなります。周辺の領域もあわせてケアすると、より自然な循環になります。`;
-      } else {
-        adjacentComment = `隣り合う「${prev.shortName}」と「${next.shortName}」との流れは大きく崩れていません。今後は、この3領域をひとまとまりで見ることで、より無理のない整え方がしやすくなります。`;
-      }
-
-      const diff = Math.abs(category.percent - opposite.percent);
-      let oppositeComment = "";
-      if (diff >= 25) {
-        if (category.percent < opposite.percent) {
-          oppositeComment = `対面する「${opposite.shortName}」(${opposite.percent}%)との差が大きく、反対側の強みが今の課題をほどくヒントになりそうです。高い領域を責める必要はありません。そこにある力を、低い領域へやさしく橋渡ししていきましょう。`;
-        } else {
-          oppositeComment = `対面する「${opposite.shortName}」(${opposite.percent}%)との差が大きく、片側だけで頑張っている状態かもしれません。反対側の領域を少し整えることで、今ある強みがもっと安定して活きてきます。`;
-        }
-      } else {
-        oppositeComment = `対面する「${opposite.shortName}」(${opposite.percent}%)とのバランスは大きく崩れていません。この軸は、今後のキャリアを支える土台として比較的整っています。`;
-      }
-
-      return `
-        <div class="relation-box">
-          <h4>ハッピーライフレインボーシートで見る関係性</h4>
-          <p><strong>隣り合うカテゴリー：</strong>「${prev.shortName}」(${prev.percent}%・${relationLevelText(prev.percent)}) ／ 「${next.shortName}」(${next.percent}%・${relationLevelText(next.percent)})</p>
-          <p>${specific.adjacent}</p>
-          <p>${adjacentComment}</p>
-          <p><strong>対面カテゴリー：</strong>「${opposite.shortName}」(${opposite.percent}%・${relationLevelText(opposite.percent)})</p>
-          <p>${specific.opposite}</p>
-          <p>${oppositeComment}</p>
-        </div>
-      `;
-    }
-
-    function getOverallMessage(scores) {
-      const average = Math.round(scores.reduce((sum, item) => sum + item.percent, 0) / scores.length);
-      const weakest = [...scores].sort((a, b) => a.percent - b.percent)[0];
-      const strongest = [...scores].sort((a, b) => b.percent - a.percent)[0];
-
-      return `
-        <h3>全体メッセージ</h3>
-        <p>あなたの総合バランスは <strong>${average}%</strong> です。高い・低いで自分を評価するための数字ではありません。ハッピーライフレインボー™では、人生を8つの色で見つめ、どの色が曇っているのか、どの色がクリアになっているのかをやさしく可視化します。</p>
-        <p>特にクリアに見えているのは「<strong>${strongest.name}</strong>」。一方で、今もっとも丁寧に見つめたいのは「<strong>${weakest.name}</strong>」です。ここを整えることが、50歳からの働き方・暮らし方・心の余白を大きく変える入口になります。</p>
-      `;
+    function getTopType(scores) {
+      const order = ['challenge', 'experience', 'freedom', 'stable', 'specialist', 'introspection', 'contribution'];
+      return order.sort(function(a, b) { return scores[b] - scores[a]; })[0];
     }
 
     function showResult() {
       const scores = calculateScores();
-      const top3 = [...scores].sort((a, b) => a.percent - b.percent).slice(0, 3);
+      const topKey = getTopType(scores);
+      const result = types[topKey];
 
-      document.getElementById("questionCard").style.display = "none";
-      document.getElementById("progressWrap").style.display = "none";
-      document.getElementById("resultPanel").style.display = "block";
-      document.getElementById("overallMessage").innerHTML = getOverallMessage(scores);
-
+      document.getElementById('questionCard').style.display = 'none';
+      document.getElementById('progressWrap').style.display = 'none';
+      document.getElementById('resultPanel').style.display = 'block';
+      document.getElementById('typePill').textContent = 'あなたの虹タイプ';
+      document.getElementById('typePill').style.background = colors[topKey];
+      document.getElementById('resultTitle').textContent = result.name;
+      document.getElementById('resultLead').textContent = result.lead;
+      document.getElementById('strengthText').textContent = result.strength;
+      document.getElementById('cautionText').textContent = result.caution;
+      document.getElementById('actionList').innerHTML = result.actions.map(function(action) { return '<li>' + action + '</li>'; }).join('');
+      document.getElementById('themeText').textContent = result.theme;
       renderChart(scores);
-      renderTop3(top3, scores);
-      renderCategoryReports(scores);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function createRainbowGradient(chart) {
-      const { ctx, chartArea } = chart;
-      if (!chartArea) return "#C8A2C8";
-      const gradient = ctx.createLinearGradient(chartArea.left, chartArea.top, chartArea.right, chartArea.top);
-      gradient.addColorStop(0.00, "#FF9AA2");
-      gradient.addColorStop(0.14, "#FFB347");
-      gradient.addColorStop(0.28, "#FFD93D");
-      gradient.addColorStop(0.42, "#6BCB77");
-      gradient.addColorStop(0.56, "#4ECDC4");
-      gradient.addColorStop(0.70, "#7ED6DF");
-      gradient.addColorStop(0.84, "#5DADE2");
-      gradient.addColorStop(1.00, "#C8A2C8");
-      return gradient;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderChart(scores) {
-      const ctx = document.getElementById("resultChart");
+      const ctx = document.getElementById('resultChart');
       if (chartInstance) chartInstance.destroy();
-
+      const keys = ['challenge', 'experience', 'freedom', 'stable', 'specialist', 'introspection', 'contribution'];
       chartInstance = new Chart(ctx, {
-        type: "radar",
+        type: 'radar',
         data: {
-          labels: scores.map(item => item.shortName),
+          labels: keys.map(function(key) { return types[key].short; }),
           datasets: [{
-            label: "キャリアバランス",
-            data: scores.map(item => item.percent),
+            label: 'キャリア虹タイプ',
+            data: keys.map(function(key) { return scores[key]; }),
             fill: true,
-            backgroundColor: "rgba(160, 196, 255, 0.18)",
-            borderColor: context => createRainbowGradient(context.chart),
-            pointBackgroundColor: scores.map(item => item.color),
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(126, 134, 173, 0.88)",
-            borderWidth: 4,
-            tension: 0.15
+            backgroundColor: 'rgba(126,214,223,.18)',
+            borderColor: '#8fb3ff',
+            pointBackgroundColor: keys.map(function(key) { return colors[key]; }),
+            pointBorderColor: '#ffffff',
+            pointRadius: 5,
+            borderWidth: 3
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          plugins: { legend: { display: false } },
           scales: {
             r: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              ticks: {
-                stepSize: 20,
-                backdropColor: "rgba(255,255,255,0.62)",
-                color: "#8a95a8"
-              },
-              grid: { color: "rgba(150,165,196,.22)" },
-              angleLines: { color: "rgba(150,165,196,.18)" },
-              pointLabels: {
-                color: "#5b6678",
-                font: { size: 13, weight: "bold" }
-              }
-            }
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: context => `${context.raw}%`
-              }
+              min: 0,
+              max: 4,
+              ticks: { stepSize: 1, display: false },
+              grid: { color: 'rgba(148,163,184,.22)' },
+              angleLines: { color: 'rgba(148,163,184,.18)' },
+              pointLabels: { color: '#566176', font: { size: 13, weight: 'bold' } }
             }
           }
         }
       });
     }
 
-    function renderTop3(top3, allScores) {
-      const container = document.getElementById("top3");
-      container.innerHTML = "";
-      top3.forEach((item, index) => {
-        const card = document.createElement("div");
-        card.className = "top-card";
-        card.style.setProperty("--cat-color", item.color);
-        card.innerHTML = `
-          <div class="rank">TOP ${index + 1}｜優先テーマ</div>
-          <div class="top-title">${iconSvg(item.key, item.color)}<h3>${item.name}</h3></div>
-          <p><strong>${item.en}</strong>｜${item.concept}</p>
-          <div class="score-line"><span>${item.percent}%</span><div class="mini-bar"><div class="mini-fill" style="width:${item.percent}%"></div></div></div>
-          <p>${getReport(item)}</p>
-          ${getRelationInsight(item, allScores)}
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function renderCategoryReports(scores) {
-      const container = document.getElementById("categoryReports");
-      container.innerHTML = "";
-      scores.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "category-report";
-        card.style.setProperty("--cat-color", item.color);
-        card.innerHTML = `
-          <div class="report-title">${iconSvg(item.key, item.color)}<h3>${item.name}</h3></div>
-          <p><strong>${item.en}</strong>｜${item.concept}</p>
-          <div class="score-line"><span>${item.percent}%</span><div class="mini-bar"><div class="mini-fill" style="width:${item.percent}%"></div></div></div>
-          <p>${getReport(item)}</p>
-          ${getRelationInsight(item, scores)}
-        `;
-        container.appendChild(card);
-      });
-    }
-
     function restartDiagnosis() {
       currentIndex = 0;
       answers = Array(questions.length).fill(null);
-      document.getElementById("resultPanel").style.display = "none";
-      document.getElementById("intro").style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.getElementById('resultPanel').style.display = 'none';
+      document.getElementById('intro').style.display = 'block';
+      document.getElementById('about').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    renderCoverCategories();
   </script>
 </body>
 </html>
