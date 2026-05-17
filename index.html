@@ -197,7 +197,7 @@
     .offer { margin-top: 26px; padding: clamp(22px, 4vw, 34px); border-radius: 28px; background: linear-gradient(135deg, rgba(255,154,162,.18), rgba(126,214,223,.20), rgba(200,162,200,.18)); border: 1px solid rgba(255,255,255,.88); text-align: center; }
     .offer h3 { margin: 8px 0 10px; font-size: clamp(1.45rem, 3.2vw, 2.35rem); line-height: 1.35; }
     .offer p { max-width: 760px; margin: 0 auto 16px; color: #566176; font-weight: 700; }
-    .slots { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78); color: #ef476f; font-weight: 900; }
+    .slots { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.78); color: #8b5cf6; font-weight: 900; }
     .footer-note { margin-top: 22px; text-align: center; color: #667085; font-size: .88rem; }
 
     @media (max-width: 760px) {
@@ -246,20 +246,20 @@
 
     <section class="question-card glass" id="questionCard">
       <div class="question-kicker">
-        <div class="badge" id="questionTheme">Career Question</div>
-        <div class="question-no" id="questionNo">Q1</div>
+        <span class="badge" id="questionTheme">現在地</span>
+        <span class="question-no" id="questionNo">Q1</span>
       </div>
       <h2 class="question-title" id="questionTitle"></h2>
       <div class="options" id="options"></div>
       <div class="nav-buttons">
-        <button class="ghost-btn" id="prevBtn" onclick="prevQuestion()">前の質問へ</button>
+        <button class="ghost-btn" id="prevBtn" onclick="prevQuestion()">戻る</button>
         <button class="primary-btn" id="nextBtn" onclick="nextQuestion()">次へ</button>
       </div>
     </section>
 
     <section class="result-panel glass" id="resultPanel">
       <div class="result-hero">
-        <div class="type-pill" id="typePill">診断結果</div>
+        <div class="type-pill" id="typePill">あなたの虹タイプ</div>
         <h2 class="result-title"><span class="rainbow-text" id="resultTitle"></span></h2>
         <p class="result-lead" id="resultLead"></p>
       </div>
@@ -284,34 +284,34 @@
       </div>
 
       <div class="offer">
-        <div class="slots">リリース記念・抽選で3名様限定</div>
-        <h3>キャリアコンサルタント技能士1級による<br>無料カウンセリングをプレゼント</h3>
-        <p>診断結果をもとに、あなたの経験・不安・これからの可能性を一緒に整理します。転職をすすめる相談ではなく、あなたらしい次の働き方を見つけるための時間です。</p>
+        <div class="slots">NEXT STEP</div>
+        <h3>気になる方は<br>DMにてご連絡ください</h3>
+        <p>診断結果を見て「もう少し整理してみたい」「自分の場合はどう考えればいい？」と感じた方は、XのDMからお気軽にご連絡ください。フォローいただければ、こちらからもフォローバックいたします。</p>
 
         <div class="result-grid" style="margin-top:22px; text-align:left;">
           <article class="result-card">
-            <h3>応募方法 1</h3>
+            <h3>Step 1</h3>
             <p>Xアカウント「コーチャ｜人生後半に虹をかける人🌈（@xcoach_a）」をフォローしてください。</p>
           </article>
           <article class="result-card">
-            <h3>応募方法 2</h3>
-            <p>この診断アプリのリリース投稿をリポストしてください。</p>
+            <h3>Step 2</h3>
+            <p>フォローいただければ、確認でき次第フォローバックいたします。</p>
           </article>
           <article class="result-card">
-            <h3>応募方法 3</h3>
-            <p>「コーチャ｜人生後半に虹をかける人🌈（@xcoach_a）」宛に、DMで「キャリア虹診断を受けました」とお送りください。</p>
+            <h3>Step 3</h3>
+            <p>DMで「キャリア虹診断を受けました」とお送りください。診断結果や気になったテーマを添えていただくと、やり取りがスムーズです。</p>
           </article>
           <article class="result-card">
-            <h3>先着確認</h3>
-            <p>フォロー・リポスト・DMの3つが確認できた方から、応募条件を満たした方の中から抽選で3名様へ、無料カウンセリングのご案内をお送りします。</p>
+            <h3>大切にしていること</h3>
+            <p>無理な提案や押しつけではなく、あなたの本音・経験・これからの可能性をやさしく整理するきっかけを大切にしています。</p>
           </article>
         </div>
 
         <div class="cta-row">
-          <a class="primary-btn link-btn" href="https://x.com/xcoach_a"},{ target="_blank" rel="noopener">Xで応募する</a>
+          <a class="primary-btn link-btn" href="https://x.com/xcoach_a" target="_blank" rel="noopener">XでDMする</a>
           <button class="ghost-btn" onclick="restartDiagnosis()">もう一度診断する</button>
         </div>
-        <p class="note">※ フォロー・リポスト・DMの3つが確認できた方を抽選対象とし、当選された3名様へDMでご案内します。</p>
+        <p class="note">※ 無料カウンセリング企画・先着応募は終了しました。今後のご相談やお問い合わせはDMよりご連絡ください。</p>
       </div>
       <p class="footer-note">Happy Life Rainbow™｜心に虹のかかる毎日を。</p>
     </section>
@@ -373,7 +373,7 @@
         name: 'インディゴ：内省探求タイプ',
         short: '内省探求',
         lead: 'すぐに答えを出すより、まず自分の価値観や本音を丁寧に見つめたいタイプです。深く考える力が、未来の軸になります。',
-        strength: '自己理解、誠実な問い、違和感に気づく感性。表面的な条件ではなく、心から納得できる道を探せます。',
+        strength: '自己理解、誠実な問い、違和感に気づく感性。周囲に流されず、自分にとって納得できる道を探せます。',
         caution: '考え続けるほど選択肢が増え、動けなくなることがあります。完璧な答えより、仮の一歩を大切にしましょう。',
         actions: ['今の違和感を文章で3行書く', '本当は大切にしたいことを5つ挙げる', '信頼できる人に今の迷いを話してみる'],
         theme: '価値観整理、キャリアのモヤモヤの言語化、人生後半のビジョン設計相談がおすすめです。'
@@ -385,7 +385,7 @@
         strength: '共感力、支援力、使命感。自分の経験を人の希望に変える働き方に可能性があります。',
         caution: '人のためを優先しすぎると、自分の収入・健康・家族の安心が後回しになりがちです。貢献と自分の幸せを両立させましょう。',
         actions: ['誰のどんな困りごとに役立ちたいか書く', '地域・教育・福祉・育成など関心領域を選ぶ', '無理なく続けられる貢献の形を考える'],
-        theme: '社会貢献型キャリア、地域活動、支援職、研修・ mentoring・人生経験の活かし方相談がおすすめです。'
+        theme: '社会貢献型キャリア、地域活動、支援職、研修・メンタリング・人生経験の活かし方相談がおすすめです。'
       }
     };
 
@@ -417,7 +417,7 @@
       { theme: '本音のサイン', text: '心の奥で、今いちばん求めている言葉に近いものは？', options: [
         ['もう一度、挑戦していい', 'challenge'], ['私の経験には価値がある', 'experience'], ['もっと自分らしい時間で生きたい', 'freedom'], ['焦らず本音を見つけたい', 'introspection']
       ]},
-      { theme: '相談したいこと', text: '無料カウンセリングで相談するとしたら、今いちばん話したいことは？', options: [
+      { theme: 'DMで話してみたいこと', text: 'DMで相談するとしたら、今いちばん話してみたいことは？', options: [
         ['転職・独立・副業の可能性', 'challenge'], ['経験や強みの棚卸し', 'experience'], ['収入・再雇用・生活設計', 'stable'], ['人生後半のビジョンや使命', 'contribution']
       ]}
     ];
